@@ -1,0 +1,16 @@
+"Classifier: RDP Naive Bayesian rRNA Classifier Version 2.10, October 2014",,,,,,,,,,,,,,,,,
+Taxonomical Hierarchy: UNITE Fungal ITS trainset 07/04/2014,,,,,,,,,,,,,,,,,
+Query File: Galaxy50-[rep_seq.fasta].fasta,,,,,,,,,,,,,,,,,
+Submit Date: Sun May 24 00:57:02 EDT 2015,,,,,,,,,,,,,,,,,
+Confidence threshold (for classification to Root ONLY): 80%,,,,,,,,,,,,,,,,,
+Symbol +/- indicates predicted sequence orientation,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+X1,+,Root,100%,Fungi,98%,Basidiomycota,55%,Agaricomycetes,44%,Hymenochaetales,18%,Hymenochaetales_unidentified,15%,Hymenochaetales_unidentified_1,15%,Hymenochaetales_sp|SH229188.06FU,8%
+X2,+,Root,100%,Fungi,100%,Chytridiomycota,95%,Blastocladiomycetes,95%,Blastocladiales,95%,Catenariaceae,95%,Catenariaceae_unidentified,95%,Catenariaceae_sp|SH200143.06FU,95%
+X3,+,Root,100%,Fungi,100%,Ascomycota,23%,Saccharomycetes,18%,Saccharomycetales,18%,Saccharomycetaceae,17%,Naumovozyma,15%,Naumovozyma_sp_QMW_2012|SH236489.06FU,15%
+X4,-,Root,100%,Fungi,100%,Ascomycota,57%,Incertae_sedis_14,5%,Incertae_sedis_15,5%,Incertae_sedis_16,5%,Knufia,2%,Knufia_perforans|SH209750.06FU,2%
+X5,+,Root,100%,Fungi,100%,Fungi_unidentified,22%,Fungi_unidentified_1,22%,Fungi_unidentified_1,22%,Fungi_unidentified_1_1,22%,Fungi_unidentified_1_1,22%,Fungi_sp|SH192681.06FU,21%
+X6,+,Root,100%,Fungi,100%,Basidiomycota,44%,Tremellomycetes,3%,Tremellales,3%,Tremellales_unidentified,1%,Tremellales_unidentified_1,1%,Tremellales_sp|SH229402.06FU,1%
+X7,+,Root,100%,Fungi,100%,Basidiomycota,40%,Agaricomycetes,31%,Boletales,13%,Boletales_unidentified,6%,Boletales_unidentified_1,6%,Boletales_sp|SH239630.06FU,4%
+X8,+,Root,100%,Fungi,100%,Ascomycota,63%,Sordariomycetes,24%,Chaetosphaeriales,6%,Chaetosphaeriales_unidentified,5%,Chaetosphaeriales_unidentified_1,5%,Chaetosphaeriales_sp|SH208092.06FU,5%
+X9,+,Root,100%,Fungi,100%,Zygomycota,9%,Incertae_sedis_10,9%,Mortierellales,7%,Mortierellaceae,7%,Mortierella,7%,Mortierella_sp|SH214852.06FU,6%
