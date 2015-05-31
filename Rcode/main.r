@@ -2,6 +2,7 @@
 ## input ##
 # install.packages("vegan")
 wd="C:/Users/Daliang/Dropbox/ToolDevelop/github/egg" # work directory name
+code.wd="C:/Users/Daliang/Dropbox/ToolDevelop/github/egg/Rcode" # the directory you save the Rcode
 prefix="test" # project name
 read.limit=100 # min reads per sample
 gene="ITS" #ITS or 16S
@@ -30,8 +31,9 @@ dim(com.raw)
 write.csv(data.frame(sample=rownames(com.raw)),file=paste("output/",prefix,".00.oldSampName.csv",sep=""))
 samplist=read.table(file=paste("input/",samplist.file,sep=""),header=T,sep=",",row.names=1)
 ## 0.1 ## prepare otu table for resample
-source("Rcode/minread.r");source("Rcode/rename.samp.r")
-com.read=minread(com.raw,samplist,prefix,read.limit=read.limit,write.otu=TRUE)
+source(file=paste(code.wd,"/minread.r",sep=""))
+source(file=paste(code.wd,"/rename.samp.r",sep=""))
+com.read=minread(com.raw,samplist,prefix,read.limit=read.limit,write.otu=TRUE,code.wd=code.wd)
 com.b=com.read$com.okay
 com.read$min.read
 dim(com.b)
@@ -42,7 +44,7 @@ dim(com.a)
 treat=read.table(file=paste("input/",treat.file,sep=""),header=T,sep=",",row.names=1)
 if(gene=="ITS")
 {
-source("Rcode/tran.ITSrdp.r")
+source(file=paste(code.wd,"/tran.ITSrdp.r",sep=""))
 classif.all=tran.ITSrdp(file=paste("input/",classif.file,".csv",sep=""),conf=its.conf)
 classif=classif.all$taxa
 }else{
@@ -50,7 +52,9 @@ classif=read.table(file=paste("input/",classif.file,".txt",sep=""),header=T,sep=
 }
 
 ## 1.1 ## basic diversity analysis, alpha, DCA, taxa overall composition
-source("Rcode/egg1.r")
-com.egg=egg1(comi=com.a,treat=treat,com.raw=com.b,classif=classif,level=5,env=NA,prefix)
+source(file=paste(code.wd,"/egg1.r",sep=""))
+com.egg=egg1(comi=com.a,treat=treat,com.raw=com.b,classif=classif,level=5,env=NA,prefix,write.output=TRUE,code.wd=code.wd)
 
- 
+# please feel free to contact Daliang Ning (ningdaliang@gmail.com)
+# If you use it, you may cite this version as
+# Daliang Ning. 2015. Egg. Retrived May 31, 2015, from https://github.com/DaliangNing/egg

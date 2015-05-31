@@ -1,4 +1,4 @@
-minread<-function(comi,samplist=NA,prefix,read.limit,write.otu=c(TRUE,FALSE))
+minread<-function(comi,samplist=NA,prefix,read.limit,write.otu=c(TRUE,FALSE),code.wd)
 {
 # from the raw OTU table to new OTU table with correct names and also return min reads for resampling
 
@@ -7,7 +7,7 @@ if(is.null(nrow(samplist)))
 {
 comc=comi
 }else{
-source("Rcode/rename.samp.r")
+source(file=paste(code.wd,"/rename.samp.r",sep=""))
 comc=rename.samp(comi,samplist)
 }
 reads=rowSums(comc)

@@ -1,4 +1,4 @@
-egg1<-function(comi,treat,com.raw,classif,level=5,env,prefix,write.output=TRUE)
+egg1<-function(comi,treat,com.raw,classif,level=5,env,prefix,write.output=TRUE,code.wd)
 {
 # Package "egg" (environment genomic gadgets) initiated by Daliang Ning (ningdaliang@gmail.com)
 # includes all commonly used methods for microbial community data
@@ -29,7 +29,7 @@ if(!is.null(nrow(com.raw))){com.raw=com.raw[match(samp.name,rownames(com.raw)),]
 
 # alpha diversity
 message("now calculating alpha diversity indexes. ",date())
-source("Rcode/alpha.r")
+source(file=paste(code.wd,"/alpha.r",sep=""))
 alpha.div=alpha(comm,com.raw)
 if(write.output){write.csv(alpha.div,paste("output/",prefix,".02.alpha.csv",sep=""))}
 
@@ -48,7 +48,7 @@ if(write.output){write.csv(dca.sum$spec.scores,paste("output/",prefix,".03.DCAsp
 # taxonomic composition
 ## percentage
 message("now calculating percentage of each taxon. ",date())
-source("Rcode/per.taxa.r")
+source(file=paste(code.wd,"/per.taxa.r",sep=""))
 abun=colSums(comm)
 taxa.per=per.taxa(classif,abun=abun,level=level)
 if(write.output){write.csv(taxa.per,paste("output/",prefix,".04.TaxaCom.csv",sep=""))}
