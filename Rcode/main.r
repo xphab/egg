@@ -1,5 +1,5 @@
 
-setwd=("C:/Users/Daliang/Dropbox/ToolDevelop/github/egg")
+setwd("C:/Users/Daliang/Dropbox/ToolDevelop/github/egg")
 # install.packages("vegan")
 
 #########################################
@@ -63,6 +63,10 @@ classif=read.table(file=paste("input/",classif.file,sep=""),header=T,sep="\t",ro
 ## 1.1 ## basic diversity analysis, alpha, DCA, taxa overall composition
 source(file=paste(code.wd,"/egg1.r",sep=""))
 com.egg=egg1(comi=com.a,treat=treat,com.raw=com.b,classif=classif,level=5,env=NA,prefix,write.output=TRUE,code.wd=code.wd)
+
+# 2 # generate community file and treatment file for ieg pipeline
+source(file=paste(code.wd,"/ieg.upload.r",sep=""))
+ieg.up=ieg.upload(com.a,treat,prefix,category=NA)
 
 # please feel free to contact Daliang Ning (ningdaliang@gmail.com)
 # If you use it, you may cite this version as
