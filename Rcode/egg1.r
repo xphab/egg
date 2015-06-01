@@ -48,13 +48,16 @@ if(write.output){write.csv(dca.sum$spec.scores,paste("output/",prefix,".03.DCAsp
 # taxonomic composition
 ## percentage
 message("now calculating percentage of each taxon. ",date())
-source(file=paste(code.wd,"/per.taxa.r",sep=""))
-abun=colSums(comm)
-taxa.per=per.taxa(classif,abun=abun,level=level)
-if(write.output){write.csv(taxa.per,paste("output/",prefix,".04.TaxaCom.csv",sep=""))}
+source(file=paste(code.wd,"/samp.taxa.r",sep=""))
+taxa.samp=samp.taxa(comm,classif,level=level,code.wd)
+if(write.output)
+{
+  write.csv(taxa.samp$abun,paste("output/",prefix,".04.TaxaComp.Abun.csv",sep=""))
+  write.csv(taxa.samp$percent,paste("output/",prefix,".04.TaxaComp.percent.csv",sep=""))
+}
 
 # output
 output=list(sample.num=samp.num,species.num=sp.num,sequences=reads.t,resample.reads=resamp.read,
-alpha=alpha.div,dca=dca.res,taxa=taxa.per)
+alpha=alpha.div,dca=dca.res,taxa=taxa.samp)
 output
 }

@@ -1,0 +1,14 @@
+Parameter,Only_Edit_This_Column,Description,Example
+wd,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg,work directory. where you save the input and output folders,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg
+code.wd,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg/Rcode,where you save the R codes,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg/Rcode
+prefix,try2,prefix for output files,try
+read.limit,100,how many reads per sample would you like,100
+gene,ITS,16S or ITS,ITS
+its.conf,0.1,ITS classification confidence level,0.1
+memory.G,30,set memory limitation to a level you may need,30
+com.file,otu_table.txt,File name of OTU table before resampled,otu_table.txt
+treat.file,treat.csv,File name of treatment information,treat.csv
+samplist.file,samplist.csv,File name of sample name list with old names in OTU table and the new names you need,samplist.csv
+comr.file,otu_resampled.txt,File name of OTU table after resampled,otu_resampled.txt
+classif.file,classifier.txt,File name of classification results,classifier.txt
+rm.samplist,NA,File name of the list of samples you want to remove before analyzing diversity,remove.samp.csv
