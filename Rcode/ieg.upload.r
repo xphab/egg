@@ -11,14 +11,19 @@ ieg.upload<-function(comi,treat,prefix,category=NA)
   comi[comi==0]=""
   comm=data.frame(cate=category,t(comi))
   write.table(data.frame(GeneID=rownames(comm),comm),file=paste("output/",prefix,".ieg.comm.txt",sep=""),quote=FALSE,sep="\t",row.names=FALSE)
-  tr.lev=levels(as.factor(treat[,1]))
-  treatment=data.frame(treat=matrix(,nrow=length(tr.lev),ncol=1))
-  for(i in 1:length(tr.lev))
+  treatment=list()
+  for(j in 1:ncol(treat))
   {
-    samp=paste(rownames(treat)[treat[,1]==tr.lev[i]],collapse=",")
-    treatment[i,1]=paste("T",tr.lev[i],":",samp,sep="")
+    tr.lev=levels(as.factor(treat[,j]))
+    treatment[[j]]=data.frame(treatm=matrix(,nrow=length(tr.lev),ncol=1))  
+    for(i in 1:length(tr.lev))
+    {
+      samp=paste(rownames(treat)[treat[,j]==tr.lev[i]],collapse=",")
+      treatment[[j]][i,1]=paste("T",tr.lev[i],":",samp,sep="")
+    }
+    write.table(treatment[[j]],file=paste("output/",prefix,".ieg.treat",j,".txt",sep=""),quote=FALSE,row.names=FALSE,col.names=FALSE)
   }
-  write.table(treatment,file=paste("output/",prefix,".ieg.treat.txt",sep=""),quote=FALSE,row.names=FALSE,col.names=FALSE)
+  names(treatment)=colnames(treat)
   output=list(com=comm,treatment=treatment)
   output
 }
