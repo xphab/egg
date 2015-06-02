@@ -44,15 +44,15 @@ if(write.output){write.csv(dca.sum$site.scores,paste("output/",prefix,".03.DCAsi
 if(write.output){write.csv(dca.sum$spec.scores,paste("output/",prefix,".03.DCAspecies.csv",sep=""))}
 
 ## Dissimilarity test between teatments
-#message("now doing dissimilarity test between treatments. ",date())
-#source(file=paste(code.wd,"/dissim.r",sep=""))
-#dis.test=list()
-#for(i in 1:ncol(treat))
-#{
-#  dis.test[[i]]=dissim(comm,treat[,i],dist.method=c("euclidean","jaccard","bray"))
-#  write.csv(dis.test[[i]],paste("output/",prefix,".05.DissimiTest.",colnames(treat)[i],".csv",sep=""))
-#}
-#names(dis.test)=colnames(treat)
+message("now doing dissimilarity test between treatments. ",date())
+source(file=paste(code.wd,"/dissim.r",sep=""))
+dis.test=list()
+for(i in 1:ncol(treat))
+{
+  dis.test[[i]]=dissim(comm,treat[,i],dist.method=c("euclidean","jaccard","bray"))
+  write.csv(dis.test[[i]],paste("output/",prefix,".05.DissimiTest.",colnames(treat)[i],".csv",sep=""))
+}
+names(dis.test)=colnames(treat)
 
 # correlation
 ## env vs diverity linear model

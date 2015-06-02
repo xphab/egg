@@ -1,5 +1,5 @@
 
-setwd("C:/Users/Daliang/Dropbox/ToolDevelop/github/egg")
+setwd("C:/Users/Daliang/Dropbox/GWMC-analysis/150523-ITS-merge/UPARSE")
 # install.packages("vegan")
 
 #########################################
