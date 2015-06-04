@@ -1,0 +1,2 @@
+"","group1","group2","mrpp.delta.euclidean","mrpp.p.euclidean","mrpp.delta.jaccard","mrpp.p.jaccard","mrpp.delta.bray","mrpp.p.bray","anosim.R.euclidean","anosim.p.euclidean","anosim.R.jaccard","anosim.p.jaccard","anosim.R.bray","anosim.p.bray","adonis.R2.euclidean","adonis.p.euclidean","adonis.R2.jaccard","adonis.p.jaccard","adonis.R2.bray","adonis.p.bray"
+"1","1","2",229.22492233334,0.664,0.493945612010924,0.643,0.328603859250851,0.667,-0.5,1,-0.5,1,-0.5,1,0.229454669740316,0.654,0.247554421584131,0.658,0.232963485154989,0.669

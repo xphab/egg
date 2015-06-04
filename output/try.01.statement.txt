@@ -1,0 +1,1 @@
+A total of 16 taxa were detected from 3524 sequences in 4 samples after resampled to 881 sequences per sample. A total of 16 taxa were detected from 4405 sequences in 4 samples before resampled.

@@ -4,6 +4,10 @@ tran.ITSrdp<-function(file,conf=0.8)
 #oldfile=read.table(file,header=F,sep=",",row.names=NULL,colClasses="character",fill=TRUE)
 old1=read.table(file,header=F,sep="\t",colClasses="character")
 old2=strsplit(old1[7:nrow(old1),],split=";")
+if(is.na(conf))
+{
+  conf=0
+}
 oldfile=data.frame(matrix(unlist(old2),nrow=length(old2),byrow=T),stringsAsFactors=FALSE)
 dim(oldfile)
 id=((1:7)*2-2+5)

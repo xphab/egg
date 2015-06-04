@@ -1,14 +1,22 @@
-Parameter,Only_Edit_This_Column,Description,Example
-wd,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg,work directory. where you save the input and output folders,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg
-code.wd,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg/Rcode,where you save the R codes,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg/Rcode
-prefix,try2,prefix for output files,try
-read.limit,100,how many reads per sample would you like,100
-gene,ITS,16S or ITS,ITS
-its.conf,0.1,ITS classification confidence level,0.1
-memory.G,30,set memory limitation to a level you may need,30
-com.file,otu_table.txt,File name of OTU table before resampled,otu_table.txt
-treat.file,treat.csv,File name of treatment information,treat.csv
-samplist.file,samplist.csv,File name of sample name list with old names in OTU table and the new names you need,samplist.csv
-comr.file,otu_resampled.txt,File name of OTU table after resampled,otu_resampled.txt
-classif.file,classifier.txt,File name of classification results,classifier.txt
-rm.samplist,NA,File name of the list of samples you want to remove before analyzing diversity,remove.samp.csv
+Parameter,Only_Edit_This_Column,Description,Example,What if you don't have or don't need
+wd,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg,work directory. where you save the input and output folders,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg,You must have
+code.wd,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg/Rcode,where you save the R codes,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg/Rcode,You must have
+prefix,try,prefix for output files,try,You must have
+read.limit,100,how many reads per sample would you like,100,NA
+gene,ITS,16S or ITS,ITS,NA
+its.conf,0.1,ITS classification confidence level,0.1,NA
+memory.G,30,set memory limitation to a level you may need,30,30
+com.file,otu_table.txt,File name of OTU table before resampled,otu_table.txt,You must have
+treat.file,treat.csv,"File name of treatment information. If you don't need, input NA.",treat.csv,NA
+samplist.file,samplist.csv,"File name of sample name list with old names in OTU table and the new names you need. If you don't need, input NA.",samplist.csv,NA
+comr.file,otu_resampled.txt,"File name of OTU table after resampled. If you don't need, input NA.",otu_resampled.txt,NA
+classif.file,classifier.txt,"File name of classification results. If you don't need, input NA.",classifier.txt,NA
+rm.samplist,remove.samp.csv,"File name of the list of samples you want to remove before analyzing diversity. If you don't need, input NA.",remove.samp.csv,NA
+prep.resamp,1,"Do you need to prepare otu table for resampling? If yes, input 1. if no, input 0.",1,0
+statement.yn,1,"Do you need a brief overall statement? If it is not sequencing result, you don't need this. If yes, 1; if no, 0.",1,0
+alpha.yn,1,Do you need to calculate alpha diversity,1,0
+DCA.yn,1,Do you need DCA?,1,0
+Dissim.yn,1,Do you need dissimilarity test?,1,0
+taxa.yn,1,Do you need to calculate taxa composition?,1,0
+ieg.yn,1,Do you to generate a formate fitting ieg pipeline format?,1,0
+cateDCA.list,NA,"If you need to do DCA for some special category, please input the category list file name. if not, input NA",cateDCA.csv,NA
