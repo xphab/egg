@@ -155,5 +155,5 @@ save.image(file=paste("output/",prefix,".",format(Sys.time(),"%Y%b%d"),".DRata",
 
 # please feel free to contact Daliang Ning (ningdaliang@gmail.com)
 # If you use it, you may cite this version as
-# Daliang Ning. 2015. Egg. Retrived Jun 4, 2015, from https://github.com/DaliangNing/egg
+# Daliang Ning. 2015. Egg. Retrived Jun 5, 2015, from https://github.com/DaliangNing/egg
 ##### end ####

@@ -145,12 +145,12 @@ if(is.null(nrow(comi)))
       for(j in 1:length(cate.lev))
       {
         com.cateS[[i]][,j]=rowSums(data.frame(comm[,cateSum.g[,i]==cate.lev[j]]))
-        setTxtProgressBar(pbar, round((20*(((i-1)/ncol(cateSum.g))+(j/length(cate.lev)))),1))
+        setTxtProgressBar(pbar, round((20*(((i-1)/ncol(cateSum.g))+(j/length(cate.lev)/ncol(cateSum.g)))),1))
       }
       colnames(com.cateS[[i]])=cate.lev;rownames(com.cateS[[i]])=rownames(comm)
       if(write.output)
       {
-        write.csv(t(com.cateS[[i]]),file = paste("output/",prefix,".07.cateSum.",i,".",colnames(cateSum.g),".csv",sep = ""))
+        write.csv(t(com.cateS[[i]]),file = paste("output/",prefix,".07.cateSum.",i,".",colnames(cateSum.g)[i],".csv",sep = ""))
       }
     }
     close(pbar)
@@ -183,9 +183,9 @@ if(is.null(nrow(comi)))
     cate.list=cateMatch(from.list=cateDCA.g,to.list=cateSum.g)
     source(file=paste(code.wd,"/cateDCA.r",sep=""))
     cs.cDCA.res=list()
-    for(i in length(cate.list))
+    for(i in 1:length(cate.list))
     {
-      cs.cDCA.res[[i]]=cateDCA(com.cateS[[i]],cate.list[[i]],prefix.cDCA=paste("output/",prefix,".09.DCAcate.",i,".",names(com.cateS),".",sep = ""),write.output=write.output)
+      cs.cDCA.res[[i]]=cateDCA(com.cateS[[i]],cate.list[[i]],prefix.cDCA=paste("output/",prefix,".09.DCAcate.",i,".",names(com.cateS)[i],".",sep = ""),write.output=write.output)
     }
     names(cs.cDCA.res)=names(cate.list)
   }else{
