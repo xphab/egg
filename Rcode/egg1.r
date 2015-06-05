@@ -1,4 +1,4 @@
-egg1<-function(comi,treat,com.raw,classif,level=5,env,prefix,write.output=TRUE,code.wd,statement.yn=1,alpha.yn=1,DCA.yn=1,Dissim.yn=1,taxa.yn=1,cateDCA.g=NA)
+egg1<-function(comi,treat,com.raw,classif,level=5,env,prefix,write.output=TRUE,code.wd,statement.yn=1,alpha.yn=1,DCA.yn=1,Dissim.yn=1,taxa.yn=1,cateDCA.g=NA,cateSum.g=NA,cateSum.DCA=0,cateSum.cateDCA=0)
 {
 # Package "egg" (environment genomic gadgets) initiated by Daliang Ning (ningdaliang@gmail.com)
 # includes all commonly used methods for microbial community data
@@ -47,10 +47,19 @@ if(is.null(nrow(comi)))
   if(!is.null(nrow(com.raw))){com.raw=com.raw[match(samp.name,rownames(com.raw)),]}
   if(!is.null(nrow(cateDCA.g)))
   {
-    cateDCA.g.name=colnames(cateDCA.g)
+    cateDCA.g.name=colnames(cateDCA.g);rname=rownames(cateDCA.g)
     cateDCA.g=data.frame(cateDCA.g[match(sp.name,rownames(cateDCA.g)),])
-    colnames(cateDCA.g)=cateDCA.g.name
+    colnames(cateDCA.g)=cateDCA.g.name;rownames(cateDCA.g)=rname
+    
   }
+  
+  if(!is.null(nrow(cateSum.g)))
+  {
+    cateSum.g.name=colnames(cateSum.g);rname=rownames(cateSum.g)
+    cateSum.g=data.frame(cateSum.g[match(sp.name,rownames(cateSum.g)),])
+    colnames(cateSum.g)=cateSum.g.name;rownames(cateSum.g)=rname
+  }
+  
   
   # alpha diversity
   if(alpha.yn!=0)
@@ -80,21 +89,9 @@ if(is.null(nrow(comi)))
   {
     cateDCA=NA
   }else{
-    cateDCA=list()
-    for (i in 1:ncol(cateDCA.g))
-    {
-      cateDCA[[i]]=list()
-      cate.lev=levels(as.factor(as.vector(cateDCA.g[,i])))
-      for (j in 1:length(cate.lev))
-      {
-        message("now calculating DCA of each category, j=",j,"/",length(cate.lev)," i=",i,"/",ncol(cateDCA.g),". ",date())
-        com.cate=comm[,cateDCA.g[,i]==cate.lev[j]]
-        cateDCA[[i]][[j]]=decorana(com.cate)
-        dca.sum.cate=summary(cateDCA[[i]][[j]])
-        if(write.output){write.csv(dca.sum.cate$site.scores,paste("output/",prefix,".06.cateDCA.",i,".",j,".",colnames(cateDCA.g)[i],".",cate.lev[j],".site.csv",sep=""))}
-        if(write.output){write.csv(dca.sum.cate$spec.scores,paste("output/",prefix,".06.cateDCA.",i,".",j,".",colnames(cateDCA.g)[i],".",cate.lev[j],".species.csv",sep=""))}
-      }
-    }
+    message("now calculating DCA for each cate. ",date())
+    source(file=paste(code.wd,"/cateDCA.r",sep=""))
+    cateDCA.res=cateDCA(comm,cateDCA.g,prefix.cDCA=paste("output/",prefix,".06.cateDCA.",sep = ""),write.output=write.output)
   }
 
     
@@ -133,9 +130,72 @@ if(is.null(nrow(comi)))
   }else{
     taxa.samp=NA
   }
+  
+  # category sum
+  ## community table of category
+  if(!is.null(nrow(cateSum.g)))
+  {
+    message("now sum each category to get new community table. ", date())
+    com.cateS=list()
+    pbar <- txtProgressBar(min = 0, max = 20, style = 3)
+    for(i in 1:ncol(cateSum.g))
+    {
+      cate.lev=levels(as.factor(as.vector(cateSum.g[,i])))
+      com.cateS[[i]]=data.frame(matrix(NA,nrow = nrow(comm),ncol = length(cate.lev)))
+      for(j in 1:length(cate.lev))
+      {
+        com.cateS[[i]][,j]=rowSums(data.frame(comm[,cateSum.g[,i]==cate.lev[j]]))
+        setTxtProgressBar(pbar, round((20*(((i-1)/ncol(cateSum.g))+(j/length(cate.lev)))),1))
+      }
+      colnames(com.cateS[[i]])=cate.lev;rownames(com.cateS[[i]])=rownames(comm)
+      if(write.output)
+      {
+        write.csv(t(com.cateS[[i]]),file = paste("output/",prefix,".07.cateSum.",i,".",colnames(cateSum.g),".csv",sep = ""))
+      }
+    }
+    close(pbar)
+    names(com.cateS)=colnames(cateSum.g)
+  }else{
+    com.cateS=NA
+  }
+  
+  ### do DCA for new community table
+  if(cateSum.DCA!=0)
+  {
+    dca.cS.res=list()
+    for(m in 1:length(com.cateS))
+    {
+      message("now calculating DCA for composition of ",names(com.cateS)[m],". ",date())
+      dca.cS.res[[m]]=decorana(comm)
+      dca.cS.sum=summary(dca.cS.res[[m]])
+      if(write.output){write.csv(dca.cS.sum$site.scores,paste("output/",prefix,".08.DCAcate.",m,".",names(com.cateS)[m],".All.Site.csv",sep=""))}
+      if(write.output){write.csv(dca.cS.sum$spec.scores,paste("output/",prefix,".08.DCAcate.",m,".",names(com.cateS)[m],".All.species.csv",sep=""))}
+    }
+    names(dca.cS.res)=names(com.cateS)
+  }else{
+    dca.cS.res=NA
+  }
+  
+  #### do DCA for new community table, category by category
+  if(cateSum.cateDCA!=0)
+  {
+    source(file=paste(code.wd,"/cateMatch.r",sep=""))
+    cate.list=cateMatch(from.list=cateDCA.g,to.list=cateSum.g)
+    source(file=paste(code.wd,"/cateDCA.r",sep=""))
+    cs.cDCA.res=list()
+    for(i in length(cate.list))
+    {
+      cs.cDCA.res[[i]]=cateDCA(com.cateS[[i]],cate.list[[i]],prefix.cDCA=paste("output/",prefix,".09.DCAcate.",i,".",names(com.cateS),".",sep = ""),write.output=write.output)
+    }
+    names(cs.cDCA.res)=names(cate.list)
+  }else{
+    cs.cDCA.res=NA
+  }
+ 
   # output
   output=list(sample.num=samp.num,species.num=sp.num,sequences=reads.t,resample.reads=resamp.read,
-              alpha=alpha.div,dca=dca.res,taxa=taxa.samp, dissimilary=dis.test,categoryDCA=cateDCA)
+              alpha=alpha.div,dca=dca.res,taxa=taxa.samp, dissimilary=dis.test,categoryDCA=cateDCA.res,
+              categorySum=com.cateS,cateSum.DCA=dca.cS.res,cateSum.catDCA=cs.cDCA.res)
   output
 }
 }

@@ -20,3 +20,6 @@ Dissim.yn,1,Do you need dissimilarity test?,1,0
 taxa.yn,1,Do you need to calculate taxa composition?,1,0
 ieg.yn,1,Do you to generate a formate fitting ieg pipeline format?,1,0
 cateDCA.list,cateDCAlist.csv,"If you need to do DCA for some special category, please input the category list file name. if not, input NA",cateDCAlist.csv,NA
+cateSum.list,cateSumlist.csv,"If you need to sum species within the same category, please input the category list file name. if not, input NA",cateSumlist.csv,NA
+cateSum.DCA,1,Do you need to do DCA for the new community table with category sum,1,0
+cateSum.cateDCA,1,Do you need to do DCA for each large category using the new community table of category sum,1,0
