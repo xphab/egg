@@ -25,7 +25,7 @@ DCA.yn=inp[17,1]
 Dissim.yn=inp[18,1]
 taxa.yn=inp[19,1]
 ieg.yn=inp[20,1]
-cateDCA.list=inp[20,1]
+cateDCA.list=inp[21,1]
 
 ## loading files ##
 library(vegan)
@@ -117,9 +117,17 @@ if(file.exists(paste("input/",classif.file,sep="")))
 }
 dim(classif)
 
+### category DCA list
+if(file.exists(paste("input/",cateDCA.list,sep="")))
+{
+  cateDCA.g=read.table(file=paste("input/",cateDCA.list,sep=""),header=T,sep=",",row.names=1)
+}else{
+  cateDCA.g=NA
+}
+
 ## 1.1 ## basic diversity analysis, alpha, DCA, taxa overall composition
 source(file=paste(code.wd,"/egg1.r",sep=""))
-com.egg=egg1(comi=com.a,treat=treat,com.raw=com.b,classif=classif,level=5,env=NA,prefix,write.output=TRUE,code.wd=code.wd,statement.yn=statement.yn,alpha.yn=alpha.yn,DCA.yn=DCA.yn,Dissim.yn=Dissim.yn,taxa.yn=taxa.yn)
+com.egg=egg1(comi=com.a,treat=treat,com.raw=com.b,classif=classif,level=5,env=NA,prefix,write.output=TRUE,code.wd=code.wd,statement.yn=statement.yn,alpha.yn=alpha.yn,DCA.yn=DCA.yn,Dissim.yn=Dissim.yn,taxa.yn=taxa.yn,cateDCA.g)
 
 # 2 # generate community file and treatment file for ieg pipeline
 if(ieg.yn!=0)

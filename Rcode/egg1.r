@@ -1,4 +1,4 @@
-egg1<-function(comi,treat,com.raw,classif,level=5,env,prefix,write.output=TRUE,code.wd,statement.yn=1,alpha.yn=1,DCA.yn=1,Dissim.yn=1,taxa.yn=1)
+egg1<-function(comi,treat,com.raw,classif,level=5,env,prefix,write.output=TRUE,code.wd,statement.yn=1,alpha.yn=1,DCA.yn=1,Dissim.yn=1,taxa.yn=1,cateDCA.g=NA)
 {
 # Package "egg" (environment genomic gadgets) initiated by Daliang Ning (ningdaliang@gmail.com)
 # includes all commonly used methods for microbial community data
@@ -45,6 +45,12 @@ if(is.null(nrow(comi)))
   }
   if(!is.null(nrow(env))){env=env[match(samp.name,rownames(env)),]}
   if(!is.null(nrow(com.raw))){com.raw=com.raw[match(samp.name,rownames(com.raw)),]}
+  if(!is.null(nrow(cateDCA.g)))
+  {
+    cateDCA.g.name=colnames(cateDCA.g)
+    cateDCA.g=data.frame(cateDCA.g[match(sp.name,rownames(cateDCA.g)),])
+    colnames(cateDCA.g)=cateDCA.g.name
+  }
   
   # alpha diversity
   if(alpha.yn!=0)
@@ -69,7 +75,29 @@ if(is.null(nrow(comi)))
   }else{
     dca.res=NA
   }
-  
+  #### DCA in each category
+  if(is.null(nrow(cateDCA.g)))
+  {
+    cateDCA=NA
+  }else{
+    cateDCA=list()
+    for (i in 1:ncol(cateDCA.g))
+    {
+      cateDCA[[i]]=list()
+      cate.lev=levels(as.factor(as.vector(cateDCA.g[,i])))
+      for (j in 1:length(cate.lev))
+      {
+        message("now calculating DCA of each category, j=",j,"/",length(cate.lev)," i=",i,"/",ncol(cateDCA.g),". ",date())
+        com.cate=comm[,cateDCA.g[,i]==cate.lev[j]]
+        cateDCA[[i]][[j]]=decorana(com.cate)
+        dca.sum.cate=summary(cateDCA[[i]][[j]])
+        if(write.output){write.csv(dca.sum.cate$site.scores,paste("output/",prefix,".06.cateDCA.",i,".",j,".",colnames(cateDCA.g)[i],".",cate.lev[j],".site.csv",sep=""))}
+        if(write.output){write.csv(dca.sum.cate$spec.scores,paste("output/",prefix,".06.cateDCA.",i,".",j,".",colnames(cateDCA.g)[i],".",cate.lev[j],".species.csv",sep=""))}
+      }
+    }
+  }
+
+    
   ## Dissimilarity test between teatments
   if(Dissim.yn!=0&!is.null(nrow(treat)))
   {
@@ -107,7 +135,7 @@ if(is.null(nrow(comi)))
   }
   # output
   output=list(sample.num=samp.num,species.num=sp.num,sequences=reads.t,resample.reads=resamp.read,
-              alpha=alpha.div,dca=dca.res,taxa=taxa.samp, dissimilary=dis.test)
+              alpha=alpha.div,dca=dca.res,taxa=taxa.samp, dissimilary=dis.test,categoryDCA=cateDCA)
   output
 }
 }
