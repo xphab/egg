@@ -11,7 +11,7 @@ A bit more friendly for people who are not familiar with R. You may just need to
 The main function of this tool is to finish almost all basic biodiversity analysis with just one action.
 Life will be better if you just need to run one file and then have a drink when waiting for all results.
 ###(3) Growing
-It is still developing. I am adding functions every week. Please let me know if you have new ideas on it.
+It is still developing. I am adding functions every week. You may come back to find something new and download the newest version if it helps. Please let me know if you have new ideas for me to try.
 ##[B] How to use it now?
 Please install R before next step. (http://www.r-project.org/)
 ###(1) Download
