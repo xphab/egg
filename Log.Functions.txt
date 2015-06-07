@@ -1,0 +1,16 @@
+[A] Functions
+1. Correct the sample names and prepare OTU table for resampling
+2. Alpha diversity index
+3. DCA
+4. Taxa composition statistic by sample
+5. Dissimilarity test (3 test methods and up to 5 distance methods)
+6. DCA by large category (e.g. phyla, or Carbon cycling) of taxa
+7. Sum by category (e.g. family, or gene family) of taxa
+8. DCA of category-sum data
+9. DCA of category-sum data by large category (seldom used)
+
+x1. Output community data file and treatment information file in the format IEG microarray pipeline required.
+
+[B] Log
+2015.5.31 Setup
+2015.6.7 Update readme and function list.
