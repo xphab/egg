@@ -4,6 +4,7 @@ a developing tool by Daliang Ning in IEG, University of Oklahoma, Norman, USA.
 2015.5.31 Setup: Now, it is just a version control system of egg package for myself and several friends.
 
 [A] What is Egg?
+
 Egg is an Environmental Microbial Ecology analysis tool based on R. Till now, it only has some basic functions.
 
 (1) Friendly for beginner
