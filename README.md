@@ -3,35 +3,23 @@ a developing tool by Daliang Ning in IEG, University of Oklahoma, Norman, USA.
 
 2015.5.31 Setup: Now, it is just a version control system of egg package for myself and several friends.
 
-[A] What is Egg?
-
+## [A] What is Egg?
 Egg is an Environmental Microbial Ecology analysis tool based on R. Till now, it only has some basic functions.
-
-(1) Friendly for beginner
-
+###(1) Friendly for beginner
 A bit more friendly for people who are not familiar with R. You may just need to collect data files and edit input parameters in an excel file, then you can get all output files you need after run a R file.
-
-(2) One-run-All-out
-
+###(2) One-run-All-out
 The main function of this tool is to finish almost all basic biodiversity analysis with just one action.
 Life will be better if you just need to run one file and then have a drink when waiting for all results.
-
-* It is still developing. I am adding functions every week. Please let me know if you have new ideas on it.
-
-[B] How to use it now?
-
+###(3) Growing
+It is still developing. I am adding functions every week. Please let me know if you have new ideas on it.
+##[B] How to use it now?
 Please install R before next step. (http://www.r-project.org/)
+###(1) Download
+Use "Download ZIP" on the github page of egg, then decompress it (so-called Egg folder).
+###(2) Have a try
+i> Edit input parameters: Open "input/1.input.csv". You will find the name, description and example of each parameter in the 1st, 3rd, 4th columns. Change the values in 2nd column. Begin with "wd" (work directory) and edit each row of 2nd column as you wish. Please change the "prefix" before next step.
 
-(1) Download ZIP. Decompress it (so-called Egg folder).
-
-(2) Open "input/1.input.csv". You will find the name, description and example of each parameter in the 1st, 3rd, 4th columns.
-Change the values in 2nd column. Begin with "wd" (work directory) and edit each row of 2nd column as you wish. Please change the "prefix" before next step.
-
-(3) Have a try with the example files in "input" folder:
-
-i> Open R.
-
-ii> Open "Rcode/main.r".
+ii> Open R, then click "File-open scripts" to open "Rcode/main.r" in Egg folder.
 
 iii> Edit the first line "setwd("...")", input the path of the folder. (you need to change "\" to "/")
 
@@ -41,7 +29,7 @@ v> Run all [in R, click "Edit-Run All"].
 
 vi> Check the output folder.
 
-(4) Deal with your own data:
+###(3) Deal with your own data:
 
 i> Creat a folder (in any directory in your computer) for your data. This folder is your work directory ("wd").
 
@@ -59,7 +47,7 @@ v> Edit the first line "setwd("...")", input the path of your work directory. (y
 
 vi> Run all [in R, click "Edit-Run All"], and wait..., and then check the "output" folder :)
 
---Recommend data analysis pipeline--
+## Recommend data analysis pipeline--
 
 The two website-based pipelines are quit useful. Some output files of Egg (e.g. "...rawOTU.txt", "...ieg.comm.txt") are compatible with their upload requirement.
 
@@ -69,7 +57,7 @@ IEG microarray pipeline: http://ieg.ou.edu/microarray/
 
 * The microarray pipeline includes various statistic methods and can also be used to analyze sequencing results.
 
---Citation--
+## Citation
 
 Feel free to use it.
 
