@@ -3,7 +3,7 @@ wd,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg,work directory. where you sav
 code.wd,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg/Rcode,where you save the R codes,C:/Users/Daliang/Dropbox/ToolDevelop/github/egg/Rcode,You must have
 prefix,try,prefix for output files,try,You must have
 read.limit,100,how many reads per sample would you like,100,NA
-gene,ITS,16S or ITS,ITS,NA
+gene,ITS,16S or ITS. Because ITS RDP output files have special format.,ITS,NA
 its.conf,0.1,ITS classification confidence level,0.1,NA
 memory.G,30,set memory limitation to a level you may need,30,30
 com.file,otu_table.txt,File name of OTU table before resampled,otu_table.txt,You must have
