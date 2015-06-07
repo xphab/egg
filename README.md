@@ -29,7 +29,7 @@ v> Run all [in R, click "Edit-Run All"].
 
 vi> Check the output folder.
 
-###(3) Deal with your own data:
+###(3) Deal with your own data
 
 i> Creat a folder (in any directory in your computer) for your data. This folder is your work directory ("wd").
 
@@ -47,7 +47,7 @@ v> Edit the first line "setwd("...")", input the path of your work directory. (y
 
 vi> Run all [in R, click "Edit-Run All"], and wait..., and then check the "output" folder :)
 
-## Recommend data analysis pipeline--
+## Recommend data analysis pipeline
 
 The two website-based pipelines are quit useful. Some output files of Egg (e.g. "...rawOTU.txt", "...ieg.comm.txt") are compatible with their upload requirement.
 
