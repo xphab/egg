@@ -1,0 +1,44 @@
+nor.test<-function(x,method=c("Shapiro","Anderson","Cramer","Lilliefors","Pearson","S.Francia"))
+{
+  library(nortest)
+  i=1
+  n=length(x)
+  res=data.frame(p=1)
+  if(sum(method=="Shapiro")>0)
+  {
+    res[i,1]=shapiro.test(x)$p.value
+    rownames(res)[i]="Shapiro"
+    i=i+1
+  }
+  if(sum(method=="Anderson")>0&n>7)
+  {
+    res[i,1]=ad.test(x)$p.value
+    rownames(res)[i]="Anderson"
+    i=i+1
+  }
+  if(sum(method=="Cramer")>0&n>7)
+  {
+    res[i,1]=cvm.test(x)$p.value
+    rownames(res)[i]="Cramer"
+    i=i+1
+  }
+  if(sum(method=="Lilliefors")>0&n>4)
+  {
+    res[i,1]=lillie.test(x)$p.value
+    rownames(res)[i]="Lilliefors"
+    i=i+1
+  }
+  if(sum(method=="Pearson")>0)
+  {
+    res[i,1]=pearson.test(x)$p.value
+    rownames(res)[i]="Pearson"
+    i=i+1
+  }
+  if(sum(method=="S.Francia")>0&(n>=5&n<=5000))
+  {
+    res[i,1]=sf.test(x)$p.value
+    rownames(res)[i]="S.Francia"
+    i=i+1
+  }
+  res
+}

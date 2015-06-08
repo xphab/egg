@@ -1,0 +1,33 @@
+vh.test<-function(x,y,method=c("Ftest","Bartlett","Levene","Fligner"))
+{
+  i=1
+  res=data.frame(p=1)
+  xy=c(x,y)
+  xy.g=c(rep(1,length(x)),rep(2,length(y)))
+  if(sum(method=="Ftest")>0)
+  {
+    res[i,1]=var.test(x,y)$p.value
+    rownames(res)[i]="Ftest"
+    i=i+1
+  }
+  if(sum(method=="Bartlett")>0)
+  {
+    res[i,1]=bartlett.test(xy~xy.g)$p.value
+    rownames(res)[i]="Bartlett"
+    i=i+1
+  }
+  if(sum(method=="Levene")>0)
+  {
+    library(car)
+    res[i,1]=leveneTest(xy,as.factor(xy.g))[[3]][1]
+    rownames(res)[i]="Levene"
+    i=i+1
+  }
+  if(sum(method=="Fligner")>0)
+  {
+    res[i,1]=fligner.test(xy~xy.g)$p.value
+    rownames(res)[i]="Fligner"
+    i=i+1
+  }
+  res
+}
