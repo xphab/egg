@@ -21,6 +21,7 @@ x1. Output community data file and treatment information file in the format IEG 
 egg2.compare.test.r: temperary main R code to do comparison between two groups of numbers. It is developing.
 vh.test.r: variance homogenity test between two groups of numbers. return p values of 4 commenly used methods
 nor.test.r: normality test for a group of numbers. return p values of up to 6 commenly used methods.
+(notation of other R codes will come soon)
 
 [C] Log
 2015.5.31 Setup
