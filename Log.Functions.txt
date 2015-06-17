@@ -35,7 +35,7 @@ egg.p.r: main function of phylogenetic alpha and beta diversity analysis and nul
 mpdn.r: MPD
 NRI.p.r: NRI (parallel computation)
 mntdn.r: MNTD
-
+(notation of other R codes will come soon)
 
 [C] Log
 2015.5.31 Setup
