@@ -1,33 +1,50 @@
 setwd("C:/Users/Daliang/Dropbox/ToolDevelop/github/egg")
 # install.packages("vegan")
+# install.packages("picante")
 
 #########################################
 ## input ##
 inp=read.table(file="input/1.Input.csv",header=T,sep=",",row.names=1,as.is=TRUE)
-wd=inp[1,1]# work directory name
-code.wd=inp[2,1] # the directory you save the Rcode
-prefix=inp[3,1] # project name
-read.limit=as.numeric(inp[4,1]) # min reads per sample
-gene=inp[5,1] #ITS or 16S
-its.conf=as.numeric(inp[6,1]) # ITS classification confidence threshold
-memory.G=as.numeric(inp[7,1])# memory limitation
-com.file=inp[8,1] # file name of otu table before resample
-treat.file=inp[9,1] # file name of treatment information
-samplist.file=inp[10,1] # file for sample name correction
-comr.file=inp[11,1] # file name of otu table after resample
-classif.file=inp[12,1] # classification file
-rm.samplist=inp[13,1] # samples that need be removed. name as "remove.samp.csv"
-prep.resamp=inp[14,1]
-statement.yn=inp[15,1]
-alpha.yn=inp[16,1]
-DCA.yn=inp[17,1]
-Dissim.yn=inp[18,1]
-taxa.yn=inp[19,1]
-ieg.yn=inp[20,1]
-cateDCA.list=inp[21,1]
-cateSum.list=inp[22,1]
-cateSum.DCA=inp[23,1]
-cateSum.cateDCA=inp[24,1]
+wd=inp["wd",1]
+code.wd=inp["code.wd",1]
+prefix=inp["prefix",1]
+read.limit=inp["read.limit",1]
+gene=inp["gene",1]
+its.conf=inp["its.conf",1]
+memory.G=as.numeric(inp["memory.G",1])
+com.file=inp["com.file",1]
+treat.file=inp["treat.file",1]
+samplist.file=inp["samplist.file",1]
+comr.file=inp["comr.file",1]
+classif.file=inp["classif.file",1]
+rm.samplist=inp["rm.samplist",1]
+prep.resamp=inp["prep.resamp",1]
+statement.yn=inp["statement.yn",1]
+alpha.yn=inp["alpha.yn",1]
+DCA.yn=inp["DCA.yn",1]
+Dissim.yn=inp["Dissim.yn",1]
+taxa.yn=inp["taxa.yn",1]
+ieg.yn=inp["ieg.yn",1]
+cateDCA.list=inp["cateDCA.list",1]
+cateSum.list=inp["cateSum.list",1]
+cateSum.DCA=inp["cateSum.DCA",1]
+cateSum.cateDCA=inp["cateSum.cateDCA",1]
+pd.file=inp["pd.file",1]
+tree.file=inp["tree.file",1]
+nworker=as.numeric(inp["nworker",1])
+phylo.yn=inp["phylo.yn",1]
+PD.yn=inp["PD.yn",1]
+MPD.yn=inp["MPD.yn",1]
+NRI.yn=inp["NRI.yn",1]
+MNTD.yn=inp["MNTD.yn",1]
+NTI.yn=inp["NTI.yn",1]
+bMPD.yn=inp["bMPD.yn",1]
+bNRI.yn=inp["bNRI.yn",1]
+bMNTD.yn=inp["bMNTD.yn",1]
+bNTI.yn=inp["bNTI.yn",1]
+ab.weight=as.logical(inp["ab.weight",1])
+exclude.consp=as.logical(inp["exclude.consp",1])
+rand.times=as.numeric(inp["rand.times",1])
 
 ## loading files ##
 library(vegan)
@@ -149,10 +166,41 @@ if(ieg.yn!=0)
   ieg.up=ieg.upload(com.a,treat,prefix,category=NA)
 }
 
-# 3 # save work space
-save.image(file=paste("output/",prefix,".",format(Sys.time(),"%Y%b%d"),".DRata",sep = ""))
+# 3 # Phylogenetic analysis
+if(phylo.yn!=0)
+{
+  library(picante)
+  # loading files
+  if(file.exists(paste("input/",pd.file,sep="")))
+  {
+    pd=read.table(file=paste("input/",pd.file,sep=""),header=T,sep=",",row.names=1)
+    if(sum(colnames(pd)!=rownames(pd))>0)
+    {
+      colnames(pd)=rownames(pd)
+      message("force the colnames of pd to be the same as rownames")
+    }
+  }else{
+    pd=NA
+  }
+  
+  if(file.exists(paste("input/",tree.file,sep="")))
+  {
+    tree=read.tree(file=paste("input/",tree.file,sep=""))
+  }else{
+    tree=NA
+  }
+  
+  source(file=paste(code.wd,"/egg.p.r",sep=""))
+  phylo.egg=egg.p(comi=com.a,tree=tree,pd=pd,nworker=nworker,memory.G=memory.G,prefix=prefix,
+                  PD.yn=PD.yn,MPD.yn=MPD.yn,NRI.yn=NRI.yn,MNTD.yn=MNTD.yn,NTI.yn=NTI.yn,
+                  bMPD.yn=bMPD.yn,bNRI.yn=bNRI.yn,bMNTD.yn=bMNTD.yn,bNTI.yn=bNTI.yn,
+                  ab.weight=ab.weight,exclude.consp=exclude.consp,rand.times=rand.times,code.wd=code.wd)
+}
+
+# END # save work space
+save.image(file=paste("output/",prefix,".",format(Sys.time(),"%Y%b%d"),".RData",sep = ""))
 
 # please feel free to contact Daliang Ning (ningdaliang@gmail.com)
 # If you use it, you may cite this version as
-# Daliang Ning. 2015. Egg. Retrived Jun 5, 2015, from https://github.com/DaliangNing/egg
+# Daliang Ning. 2015. Egg. Retrived Jun 16, 2015, from https://github.com/DaliangNing/egg
 ##### end ####

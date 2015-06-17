@@ -87,7 +87,7 @@ if(is.null(nrow(comi)))
   #### DCA in each category
   if(is.null(nrow(cateDCA.g)))
   {
-    cateDCA=NA
+    cateDCA.res=NA
   }else{
     message("now calculating DCA for each cate. ",date())
     source(file=paste(code.wd,"/cateDCA.r",sep=""))

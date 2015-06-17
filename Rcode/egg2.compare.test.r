@@ -13,3 +13,5 @@ nt.y=nor.test(y)
 install.packages("car")
 source(file = "Rcode/vh.test.r")
 vht=vh.test(x,y)
+
+# 3 # t-test

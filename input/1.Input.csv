@@ -12,14 +12,30 @@ samplist.file,samplist.csv,"File name of sample name list with old names in OTU 
 comr.file,otu_resampled.txt,"File name of OTU table after resampled. If you don't need, input NA.",otu_resampled.txt,NA
 classif.file,classifier.txt,"File name of classification results. If you don't need, input NA.",classifier.txt,NA
 rm.samplist,remove.samp.csv,"File name of the list of samples you want to remove before analyzing diversity. If you don't need, input NA.",remove.samp.csv,NA
-prep.resamp,1,"Do you need to prepare otu table for resampling? If yes, input 1. if no, input 0.",1,0
+pd.file,pd.csv,"File name of phylogenetic distance matrix. If you don't have one, input NA.",pd.csv,NA
+tree.file,NA,"File name of phylogenetic tree. If you don't have one, input NA.",tree.nwk,NA
+nworker,4,Thread number for parallel computing,8,You must set one
+prep.resamp,0,"Do you need to prepare otu table for resampling? If yes, input 1. if no, input 0.",1,0
 statement.yn,1,"Do you need a brief overall statement? If it is not sequencing result, you don't need this. If yes, 1; if no, 0.",1,0
 alpha.yn,1,Do you need to calculate alpha diversity,1,0
 DCA.yn,1,Do you need DCA?,1,0
 Dissim.yn,1,Do you need dissimilarity test?,1,0
 taxa.yn,1,Do you need to calculate taxa composition?,1,0
 ieg.yn,1,Do you to generate a formate fitting ieg pipeline format?,1,0
-cateDCA.list,cateDCAlist.csv,"If you need to do DCA for some special category, please input the category list file name. if not, input NA",cateDCAlist.csv,NA
-cateSum.list,cateSumlist.csv,"If you need to sum species within the same category, please input the category list file name. if not, input NA",cateSumlist.csv,NA
-cateSum.DCA,1,Do you need to do DCA for the new community table with category sum,1,0
-cateSum.cateDCA,1,Do you need to do DCA for each large category using the new community table of category sum,1,0
+cateDCA.list,NA,"If you need to do DCA for some special category, please input the category list file name. if not, input NA",cateDCAlist.csv,NA
+cateSum.list,NA,"If you need to sum species within the same category, please input the category list file name. if not, input NA",cateSumlist.csv,NA
+cateSum.DCA,0,Do you need to do DCA for the new community table with category sum,1,0
+cateSum.cateDCA,0,Do you need to do DCA for each large category using the new community table of category sum,1,0
+phylo.yn,1,Do you want to do phylogenetic analysis? this may take much more time than other analysis,1,0
+PD.yn,0,Phylogenetic diversity index?,1,0
+MPD.yn,1,MPD?,1,0
+NRI.yn,1,NRI?,1,0
+MNTD.yn,1,MNTD?,1,0
+NTI.yn,1,NTI?,1,0
+bMPD.yn,1,betaMPD?,1,0
+bNRI.yn,1,betaNRI?,1,0
+bMNTD.yn,1,betaMNTD?,1,0
+bNTI.yn,1,betaNTI?,1,0
+ab.weight,TRUE,abundance weighted or not?,TRUE,FALSE
+exclude.consp,FALSE,"Should conspecific taxa in different communities be exclude from betaMNTD calculations? if so, input TRUE",FALSE,FALSE
+rand.times,1000,Number of randomizations,1000,You must set one

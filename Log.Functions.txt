@@ -1,8 +1,6 @@
 What is new?
 
-egg2.compare.test.r: temperary main R code to do comparison between two groups of numbers. It is developing.
-vh.test.r: variance homogenity test between two groups of numbers. return p values of 4 commenly used methods
-nor.test.r: normality test for a group of numbers. return p values of up to 6 commenly used methods.
+phylogenetic alpha and beta diversity analysis
 
 
 [A] Functions of main.r
@@ -16,12 +14,30 @@ nor.test.r: normality test for a group of numbers. return p values of up to 6 co
 8. DCA of category-sum data
 9. DCA of category-sum data by large category (seldom used)
 x1. Output community data file and treatment information file in the format IEG microarray pipeline required.
+p01. Calculate phylogenetic distance matrix from tree file (tree.nwk)
+p02. List the species discarded when matching species in OTU table and tree file.
+p03. MPD (mean phylogenetic distance)
+p04. NRI (Nearest Relative Index)
+p05. MNTD (mean nearest taxon distance)
+p06. NTI (nearest taxon index)
+p07. betaMPD (mean phylogenetic distance between each pair of samples)
+p08. betaNRI (nearest relative index based on betaMPD)
+p09. betaMNTD (mean nearest taxon distance between each pair of samples)
+p10. betaNTI (nearest taxon index based on betaMNTD)
+p11. Aggregate of phylogenetic alpha diversity indexes
+p12. Aggregate of phylogenetic beta diversity indexes
 
 [B] R function list
 egg2.compare.test.r: temperary main R code to do comparison between two groups of numbers. It is developing.
 vh.test.r: variance homogenity test between two groups of numbers. return p values of 4 commenly used methods
 nor.test.r: normality test for a group of numbers. return p values of up to 6 commenly used methods.
+egg.p.r: main function of phylogenetic alpha and beta diversity analysis and null model test.
+mpdn.r: MPD
+NRI.p.r: NRI (parallel computation)
+mntdn.r: MNTD
+
 
 [C] Log
 2015.5.31 Setup
 2015.6.7 Update readme and function list.
+2015.6.16 Phylogenetic alpha and beta diversity analysis, as well as null model test of them.
