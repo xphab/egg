@@ -1,6 +1,6 @@
 NTI.p<-function(comm, dis, nworker=4, memo.size.GB=50, samp.group=NA, weighted=c(TRUE,FALSE),grouping=c(FALSE,TRUE),rand=1000,output.MNTD=c(FALSE,TRUE),code.wd)
 {
-  # calculate NTI based on MNTD, need package "picante" by parallel compute#
+  # calculate NTI based on MNTD#
   ## written by Daliang Ning (ningdaliang@gmail.com) ##
   # version beta p1.0: 2015.6.13
   ## cite this version of R script as personal communication from Daliang Ning in University of Oklahoma ##
@@ -93,6 +93,6 @@ NTI.p<-function(comm, dis, nworker=4, memo.size.GB=50, samp.group=NA, weighted=c
   {
     output=list(NTI=result,MNTD=result.mntd)
   }else{
-    output=result}
+    output=data.frame(NTI=result)}
   output
 }

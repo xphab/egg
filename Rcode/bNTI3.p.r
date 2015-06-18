@@ -1,15 +1,14 @@
 bNTI3.p<-function(comm, dis, nworker=4, memo.size.GB=50, samp.group=NA, weighted=c(TRUE,FALSE),grouping=c(FALSE,TRUE),exclude.consp=FALSE,rand=1000,output.bMNTD=c(FALSE,TRUE),code.wd)
 {
-# calculate betaNTI based on betaMNTD, need package "picante" by parallel compute#
+# calculate betaNTI based on betaMNTD#
 ## written by Daliang Ning (ningdaliang@gmail.com) ##
 # version beta p3.0: 2015.4.1# add setting for exclude.consp.
 ## Improvement from Stegen's paper: you can calculate within group.
 ## cite the original reference: Stegen JC, Lin X, Fredrickson JK, Chen X, Kennedy DW, Murray CJ et al. (2013). Quantifying community assembly processes and identifying features that impose them. Isme Journal 7: 2069-2079.##
 ## cite this version of R script as personal communication from Daliang Ning in University of Oklahoma ##
-## grouping: If grouping=TRUE, randomization will perform within group. If group="N", randomization will be across all samples. Default is FALSE.##
+## grouping: If grouping=TRUE, randomization will perform within group. If grouping=FALSE, randomization will be across all samples. Default is FALSE.##
 
 #load package
-library(picante)
 library(parallel)
 source(file =paste(code.wd,"/bmntd.r",sep = ""))
 memory.limit(size=memo.size.GB*1024)
@@ -19,6 +18,7 @@ result=data.frame(matrix(NA,length(samp.name),length(samp.name)))
 colnames(result)=samp.name
 rownames(result)=samp.name
 result.mntd=result
+weighted=weighted[1]
 
 ## randomization function ##
 bMNTD.random<-function(i,diss,com,weighted,exclude.consp,code.wd)
@@ -33,7 +33,7 @@ bMNTD.random<-function(i,diss,com,weighted,exclude.consp,code.wd)
   bMNTD.rand
 }
 
-if(grouping)
+if(grouping[1])
 {
 # calculate betaMNTD and betaNTI within group #
 group=levels(as.factor(samp.group[,2]))
@@ -82,7 +82,7 @@ result=bNTI
 result.mntd=bMNTD.obs
 gc()
 }
-if(output.bMNTD)
+if(output.bMNTD[1])
 {
 output=list(betaNTI=result,betaMNTD=result.mntd)
 }else{

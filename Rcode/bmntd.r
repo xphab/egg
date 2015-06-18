@@ -13,7 +13,9 @@ bmntd<-function(comm, pd, abundance.weighted = TRUE, exclude.conspecifics = FALS
   min.d=comm[1,]
   if(exclude.conspecifics)
   {
-    pd[pd==0]=NA
+    pd=as.matrix(pd)
+    gc()
+    diag(pd)=NA
     for(i in 1:N)
     {
       id=(comm[i,]==0)

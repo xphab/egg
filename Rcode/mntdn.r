@@ -1,13 +1,18 @@
 mntdn<-function(comm, pd, abundance.weighted = TRUE)
 {
-  if(sum(colnames(comm)!=colnames(pd))>0)
+  if(sum(colnames(comm)!=rownames(pd))>0)
   {
-    sp.name=colnames(pd)
+    sp.name=intersect(colnames(comm),rownames(pd))
     comm=comm[,match(sp.name,colnames(comm))]
+    pd=pd[match(sp.name,rownames(pd)),match(sp.name,rownames(pd))]
+    gc()
   }
+  pd=as.matrix(pd)
+  gc()
   N=nrow(comm)
   id=(comm>0)
   diag(pd)=NA
+  gc()
   if(abundance.weighted)
   {
     min.d=matrix(0,nrow = N,ncol = ncol(comm))

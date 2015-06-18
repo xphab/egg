@@ -1,13 +1,12 @@
 bNRI.p<-function(comm, dis, nworker=4, memo.size.GB=50, samp.group=NA, weighted=c(TRUE,FALSE),grouping=c(FALSE,TRUE),rand=1000,output.bMPD=c(FALSE,TRUE),code.wd)
 {
-# calculate betaNRI based on betaMPD, need package "picante" by parallel compute#
+# calculate betaNRI based on betaMPD#
 ## written by Daliang Ning (ningdaliang@gmail.com) ##
 # version beta p1.0: 2015.6.13
 ## cite this version of R script as personal communication from Daliang Ning in University of Oklahoma ##
 ## grouping: If grouping=TRUE, randomization will perform within group. If group="N", randomization will be across all samples. Default is FALSE.##
 
 #load package
-library(picante)
 library(parallel)
 source(file = paste(code.wd,"/bmpd.r",sep = ""))
 memory.limit(size=memo.size.GB*1024)
