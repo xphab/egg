@@ -14,28 +14,42 @@ classif.file,classifier.txt,"File name of classification results. If you don't n
 rm.samplist,remove.samp.csv,"File name of the list of samples you want to remove before analyzing diversity. If you don't need, input NA.",remove.samp.csv,NA
 pd.file,pd.csv,"File name of phylogenetic distance matrix. If you don't have one, input NA.",pd.csv,NA
 tree.file,NA,"File name of phylogenetic tree. If you don't have one, input NA.",tree.nwk,NA
+env.file,env.csv,File name of Environment factors values,env.csv,NA
 nworker,4,Thread number for parallel computing,8,You must set one
 prep.resamp,0,"Do you need to prepare otu table for resampling? If yes, input 1. if no, input 0.",1,0
-statement.yn,1,"Do you need a brief overall statement? If it is not sequencing result, you don't need this. If yes, 1; if no, 0.",1,0
-alpha.yn,1,Do you need to calculate alpha diversity,1,0
-DCA.yn,1,Do you need DCA?,1,0
-Dissim.yn,1,Do you need dissimilarity test?,1,0
-taxa.yn,1,Do you need to calculate taxa composition?,1,0
-ieg.yn,1,Do you to generate a formate fitting ieg pipeline format?,1,0
+statement.yn,0,"Do you need a brief overall statement? If it is not sequencing result, you don't need this. If yes, 1; if no, 0.",1,0
+alpha.yn,0,Do you need to calculate alpha diversity,1,0
+beta.yn,1,Do you need to calculate beta diversity distance matrix,1,0
+DCA.yn,0,Do you need DCA?,1,0
+Dissim.yn,0,Do you need dissimilarity test?,1,0
+taxa.yn,0,Do you need to calculate taxa composition?,1,0
+ieg.yn,0,Do you to generate a formate fitting ieg pipeline format?,1,0
 cateDCA.list,NA,"If you need to do DCA for some special category, please input the category list file name. if not, input NA",cateDCAlist.csv,NA
 cateSum.list,NA,"If you need to sum species within the same category, please input the category list file name. if not, input NA",cateSumlist.csv,NA
 cateSum.DCA,0,Do you need to do DCA for the new community table with category sum,1,0
 cateSum.cateDCA,0,Do you need to do DCA for each large category using the new community table of category sum,1,0
-phylo.yn,1,Do you want to do phylogenetic analysis? this may take much more time than other analysis,1,0
+cateCor.file,cateCorlist.csv,The taxa category list file. for correlation test.,cateCorlist.csv,NA
+alpha.env.yn,1,Correlation test between alpha diversity index and each env factor?,1,0
+beta.env.yn,1,Correlation test between beta diversity index and each env factor?,1,0
+cate.env.yn,1,Correlation test between each env factor and each member of each category?,1,0
+phylo.yn,0,Do you want to do phylogenetic analysis? this may take much more time than other analysis,1,0
 PD.yn,0,Phylogenetic diversity index?,1,0
-MPD.yn,1,MPD?,1,0
-NRI.yn,1,NRI?,1,0
-MNTD.yn,1,MNTD?,1,0
-NTI.yn,1,NTI?,1,0
-bMPD.yn,1,betaMPD?,1,0
-bNRI.yn,1,betaNRI?,1,0
-bMNTD.yn,1,betaMNTD?,1,0
-bNTI.yn,1,betaNTI?,1,0
+MPD.yn,0,MPD?,1,0
+NRI.yn,0,NRI?,1,0
+MNTD.yn,0,MNTD?,1,0
+NTI.yn,0,NTI?,1,0
+bMPD.yn,0,betaMPD?,1,0
+bNRI.yn,0,betaNRI?,1,0
+bMNTD.yn,0,betaMNTD?,1,0
+bNTI.yn,0,betaNTI?,1,0
 ab.weight,TRUE,abundance weighted or not?,TRUE,FALSE
 exclude.consp,FALSE,"Should conspecific taxa in different communities be exclude from betaMNTD calculations? if so, input TRUE",FALSE,FALSE
 rand.times,1000,Number of randomizations,1000,You must set one
+cor.MPD.env.yn,0,mantel correlation test between MPD and each env factor?,1,0
+cor.NRI.env.yn,0,mantel correlation test between NRI and each env factor?,1,0
+cor.MNTD.env.yn,0,mantel correlation test between MNTD and each env factor?,1,0
+cor.NTI.env.yn,0,mantel correlation test between NTI and each env factor?,1,0
+cor.bMPD.env.yn,0,mantel correlation test between bMPD and each env factor?,1,0
+cor.bNRI.env.yn,0,mantel correlation test between bNRI and each env factor?,1,0
+cor.bMNTD.env.yn,0,mantel correlation test between bMNTD and each env factor?,1,0
+cor.bNTI.env.yn,0,mantel correlation test between bNTI and each env factor?,1,0

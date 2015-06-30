@@ -1,4 +1,4 @@
-egg1<-function(comi,treat,com.raw,classif,level=5,env,prefix,write.output=TRUE,code.wd,statement.yn=1,alpha.yn=1,DCA.yn=1,Dissim.yn=1,taxa.yn=1,cateDCA.g=NA,cateSum.g=NA,cateSum.DCA=0,cateSum.cateDCA=0)
+egg1<-function(comi,treat,com.raw,classif,level=5,env,prefix,write.output=TRUE,code.wd,statement.yn=1,alpha.yn=1,beta.yn=1,DCA.yn=1,Dissim.yn=1,taxa.yn=1,cateDCA.g=NA,cateSum.g=NA,cateSum.DCA=0,cateSum.cateDCA=0)
 {
 # Package "egg" (environment genomic gadgets) initiated by Daliang Ning (ningdaliang@gmail.com)
 # includes all commonly used methods for microbial community data
@@ -73,6 +73,17 @@ if(is.null(nrow(comi)))
   }
 
   # beta diversity
+  ## distance
+  if(beta.yn!=0)
+  {
+    message("now calculating beta diversity indexes. ",date())
+    source(file = paste(code.wd,"/beta.dis.r",sep=""))
+    beta.div=beta.dis(comm,binary = "Both")
+    if(write.output){write.csv(beta.div,paste("output/",prefix,".05.1.beta.csv",sep=""))}
+  }else{
+    beta.div=NA
+  }
+  
   ## DCA
   if(DCA.yn!=0)
   {
@@ -104,7 +115,7 @@ if(is.null(nrow(comi)))
     for(i in 1:ncol(treat))
     {
       dis.test[[i]]=dissim(comm,treat[,i],dist.method=c("euclidean","jaccard","bray"))
-      write.csv(dis.test[[i]],paste("output/",prefix,".05.DissimiTest.",colnames(treat)[i],".csv",sep=""))
+      write.csv(dis.test[[i]],paste("output/",prefix,".05.2.DissimiTest.",colnames(treat)[i],".csv",sep=""))
     }
     names(dis.test)=colnames(treat)
   }else{
@@ -194,7 +205,7 @@ if(is.null(nrow(comi)))
  
   # output
   output=list(sample.num=samp.num,species.num=sp.num,sequences=reads.t,resample.reads=resamp.read,
-              alpha=alpha.div,dca=dca.res,taxa=taxa.samp, dissimilary=dis.test,categoryDCA=cateDCA.res,
+              alpha=alpha.div,beta=beta.div,dca=dca.res,taxa=taxa.samp, dissimilary=dis.test,categoryDCA=cateDCA.res,
               categorySum=com.cateS,cateSum.DCA=dca.cS.res,cateSum.catDCA=cs.cDCA.res)
   output
 }

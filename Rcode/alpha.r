@@ -2,8 +2,9 @@ alpha<-function(comm,com.raw=NA)
 {
 # by Daliang Ning 2015.5.23
 library(vegan)
-sp.pool=t(estimateR(comm))
-if(!is.null(nrow(com.raw))){sp.pool.b=t(estimateR(com.raw));colnames(sp.pool.b)=paste(colnames(sp.pool.b),".before.resamp",sep="");sp.pool=cbind(sp.pool,sp.pool.b)}
+comm.pool=round(comm,0)
+sp.pool=t(estimateR(comm.pool))
+if(!is.null(nrow(com.raw))){com.raw.p=round(com.raw,0);sp.pool.b=t(estimateR(com.raw.p));colnames(sp.pool.b)=paste(colnames(sp.pool.b),".before.resamp",sep="");sp.pool=cbind(sp.pool,sp.pool.b)}
 alpha.method=c("shannon","simpson","invsimpson")
 samp.num=nrow(comm)
 samp.name=rownames(comm)

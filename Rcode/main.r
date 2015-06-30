@@ -1,6 +1,10 @@
-setwd("C:/Users/Daliang/Dropbox/ToolDevelop/github/egg")
+
+setwd("C:/Users/Daliang/Dropbox/NSF-Macrosystem/GiganteITS_analyze")
+
+# setwd("C:/Users/Daliang/Dropbox/ToolDevelop/github/egg")
 # install.packages("vegan")
 # install.packages("picante")
+# install.packages("data.table")
 
 #########################################
 ## input ##
@@ -8,7 +12,7 @@ inp=read.table(file="input/1.Input.csv",header=T,sep=",",row.names=1,as.is=TRUE)
 wd=inp["wd",1]
 code.wd=inp["code.wd",1]
 prefix=inp["prefix",1]
-read.limit=inp["read.limit",1]
+read.limit=as.numeric(inp["read.limit",1])
 gene=inp["gene",1]
 its.conf=inp["its.conf",1]
 memory.G=as.numeric(inp["memory.G",1])
@@ -21,6 +25,7 @@ rm.samplist=inp["rm.samplist",1]
 prep.resamp=inp["prep.resamp",1]
 statement.yn=inp["statement.yn",1]
 alpha.yn=inp["alpha.yn",1]
+beta.yn=inp["beta.yn",1]
 DCA.yn=inp["DCA.yn",1]
 Dissim.yn=inp["Dissim.yn",1]
 taxa.yn=inp["taxa.yn",1]
@@ -29,6 +34,10 @@ cateDCA.list=inp["cateDCA.list",1]
 cateSum.list=inp["cateSum.list",1]
 cateSum.DCA=inp["cateSum.DCA",1]
 cateSum.cateDCA=inp["cateSum.cateDCA",1]
+cateCor.file=inp["cateCor.file",1]
+alpha.env.yn=inp["alpha.env.yn",1]
+beta.env.yn=inp["beta.env.yn",1]
+cate.env.yn=inp["cate.env.yn",1]
 pd.file=inp["pd.file",1]
 tree.file=inp["tree.file",1]
 nworker=as.numeric(inp["nworker",1])
@@ -45,6 +54,15 @@ bNTI.yn=inp["bNTI.yn",1]
 ab.weight=as.logical(inp["ab.weight",1])
 exclude.consp=as.logical(inp["exclude.consp",1])
 rand.times=as.numeric(inp["rand.times",1])
+env.file=inp["env.file",1]
+cor.MPD.env.yn=inp["cor.MPD.env.yn",1]
+cor.NRI.env.yn=inp["cor.NRI.env.yn",1]
+cor.MNTD.env.yn=inp["cor.MNTD.env.yn",1]
+cor.NTI.env.yn=inp["cor.NTI.env.yn",1]
+cor.bMPD.env.yn=inp["cor.bMPD.env.yn",1]
+cor.bNRI.env.yn=inp["cor.bNRI.env.yn",1]
+cor.bMNTD.env.yn=inp["cor.bMNTD.env.yn",1]
+cor.bNTI.env.yn=inp["cor.bNTI.env.yn",1]
 
 ## loading files ##
 library(vegan)
@@ -120,6 +138,15 @@ if(file.exists(paste("input/",treat.file,sep="")))
   treat=NA
 }
 dim(treat)
+
+### env
+if(file.exists(paste("input/",env.file,sep="")))
+{
+  env=read.table(file=paste("input/",env.file,sep=""),header=T,sep=",",row.names=1)
+}else{
+  env=NA
+}
+
 ### classification information
 if(file.exists(paste("input/",classif.file,sep="")))
 {
@@ -152,14 +179,26 @@ if(file.exists(paste("input/",cateSum.list,sep="")))
   cateSum.g=NA
 }
 
-## 1.1 ## basic diversity analysis, alpha, DCA, taxa overall composition
+## 1 ## basic diversity analysis, alpha, DCA, taxa overall composition
 source(file=paste(code.wd,"/egg1.r",sep=""))
 com.egg=egg1(comi=com.a,treat=treat,com.raw=com.b,classif=classif,level=5,env=NA,prefix,
-             write.output=TRUE,code.wd=code.wd,statement.yn=statement.yn,alpha.yn=alpha.yn,
+             write.output=TRUE,code.wd=code.wd,statement.yn=statement.yn,alpha.yn=alpha.yn,beta.yn=beta.yn,
              DCA.yn=DCA.yn,Dissim.yn=Dissim.yn,taxa.yn=taxa.yn,cateDCA.g=cateDCA.g,cateSum.g=cateSum.g,
              cateSum.DCA=cateSum.DCA,cateSum.cateDCA=cateSum.cateDCA)
 
-# 2 # generate community file and treatment file for ieg pipeline
+## 2 ## correlation test
+source(file = paste(code.wd,"/egg.cor.r",sep=""))
+if(file.exists(paste("input/",cateCor.file,sep="")))
+{
+  cateCor.g=read.table(file=paste("input/",cateCor.file,sep=""),header=T,sep=",",row.names=1)
+}else{
+  cateCor.g=NA
+}
+cor.egg=egg.cor(comi = com.a,category = cateCor.g,env = env,
+                alpha.env.yn = alpha.env.yn,beta.env.yn = beta.env.yn,cate.env.yn = cate.env.yn,
+                nworker=nworker,write.output = TRUE,prefix = prefix,code.wd = code.wd)
+
+## 3 ## generate community file and treatment file for ieg pipeline
 if(ieg.yn!=0)
 {
   source(file=paste(code.wd,"/ieg.upload.r",sep=""))
@@ -191,10 +230,15 @@ if(phylo.yn!=0)
   }
   
   source(file=paste(code.wd,"/egg.p.r",sep=""))
-  phylo.egg=egg.p(comi=com.a,tree=tree,pd=pd,nworker=nworker,memory.G=memory.G,prefix=prefix,
+  phylo.egg=egg.p(comi=com.a,tree=tree,pd=pd,env=env,nworker=nworker,memory.G=memory.G,prefix=prefix,
                   PD.yn=PD.yn,MPD.yn=MPD.yn,NRI.yn=NRI.yn,MNTD.yn=MNTD.yn,NTI.yn=NTI.yn,
                   bMPD.yn=bMPD.yn,bNRI.yn=bNRI.yn,bMNTD.yn=bMNTD.yn,bNTI.yn=bNTI.yn,
+                  cor.MPD.env.yn=cor.MPD.env.yn, cor.NRI.env.yn=cor.NRI.env.yn,
+                  cor.MNTD.env.yn=cor.MNTD.env.yn, cor.NTI.env.yn=cor.NTI.env.yn,
+                  cor.bMPD.env.yn=cor.bMPD.env.yn, cor.bNRI.env.yn=cor.bNRI.env.yn,
+                  cor.bMNTD.env.yn=cor.bMNTD.env.yn, cor.bNTI.env.yn=cor.bNTI.env.yn,
                   ab.weight=ab.weight,exclude.consp=exclude.consp,rand.times=rand.times,code.wd=code.wd)
+  
 }
 
 # END # save work space
@@ -202,5 +246,5 @@ save.image(file=paste("output/",prefix,".",format(Sys.time(),"%Y%b%d"),".RData",
 
 # please feel free to contact Daliang Ning (ningdaliang@gmail.com)
 # If you use it, you may cite this version as
-# Daliang Ning. 2015. Egg. Retrived Jun 16, 2015, from https://github.com/DaliangNing/egg
+# Daliang Ning. 2015. Egg. Retrived Jun 26, 2015, from https://github.com/DaliangNing/egg
 ##### end ####

@@ -4,7 +4,7 @@ a developing tool by Daliang Ning in IEG, University of Oklahoma, Norman, USA.
 2015.5.31 Setup: Now, it is just a version control system of egg package for myself and several friends.
 
 ##What is new and what is coming?
-New functions are ready: phylogenetic distance from tree, phylogenetic alpha and beta diversity indexes (MPD, MNTD, betaMPD, betaMNTD), phylogenetic metrics of environment selection and stochasticity (NRI, NTI, betaNRI, betaNTI).
+New functions are ready: CCA test using main.cca.r
 
 Next, I will write a tool to compare two groups of numbers, considering normality, variance homogenity, independence, effect size, etc., in order to do comparison in a right way. 2015.6.16
 

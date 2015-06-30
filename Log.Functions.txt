@@ -1,7 +1,7 @@
 What is new?
+egg.cor.r:  correlation test between env factors and alpha, beta, each category, respectively, using pearson, kendall, spearman and mantel
 
-phylogenetic alpha and beta diversity analysis
-
+main.cca.r: CCA using simplified community matrix to test all possible combination of env factors. Provide much more qualified combinations than forward and backward search.
 
 [A] Functions of main.r
 1. Correct the sample names and prepare OTU table for resampling
@@ -28,9 +28,16 @@ p11. Aggregate of phylogenetic alpha diversity indexes
 p12. Aggregate of phylogenetic beta diversity indexes
 
 [B] R function list
+egg.cor.r:  correlation test between env factors and alpha, beta, each category, respectively, using pearson, kendall, spearman and mantel
+
+main.cca.r: CCA using simplified community matrix to test all possible combination of env factors. Provide much more qualified combinations than forward and backward search.
+
 egg2.compare.test.r: temperary main R code to do comparison between two groups of numbers. It is developing.
+
 vh.test.r: variance homogenity test between two groups of numbers. return p values of 4 commenly used methods
+
 nor.test.r: normality test for a group of numbers. return p values of up to 6 commenly used methods.
+
 egg.p.r: main function of phylogenetic alpha and beta diversity analysis and null model test.
 mpdn.r: MPD
 NRI.p.r: NRI (parallel computation)
