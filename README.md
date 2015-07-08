@@ -5,8 +5,11 @@ a developing tool by Daliang Ning in IEG, University of Oklahoma, Norman, USA.
 
 ##What is new and what is coming?
 New functions are ready:
+
 egg.cor.r:  correlation test between env factors and alpha, beta, each category, respectively, using pearson, kendall, spearman and mantel
+
 main.cca.r: CCA test. to test all possible combinations of env for CCA. 
+
 Rcode.gadget: a folder includes some small tools.
 
 Next, I will write a tool to compare two groups of numbers, considering normality, variance homogenity, independence, effect size, etc., in order to do comparison in a right way. 2015.6.16
