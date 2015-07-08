@@ -1,4 +1,4 @@
-egg.p<-function(comi,tree=tree,pd=pd,env=env,nworker=8,memory.G=50,prefix,PD.yn=0,MPD.yn=0,NRI.yn=0,MNTD.yn=0,NTI.yn=0,bMPD.yn=0,bNRI.yn=0,bMNTD.yn=0,bNTI.yn=0,cor.MPD.env.yn=0, cor.NRI.env.yn=0, cor.MNTD.env.yn=0, cor.NTI.env.yn=0, cor.bMPD.env.yn=0, cor.bNRI.env.yn=0, cor.bMNTD.env.yn=0, cor.bNTI.env.yn=0, ab.weight=TRUE,exclude.consp=FALSE,rand.times=1000,code.wd)
+egg.p<-function(comi,tree=tree,pd=pd,env=env,nworker=8,memory.G=50,prefix,PD.yn=0,MPD.yn=0,NRI.yn=0,MNTD.yn=0,NTI.yn=0,bMPD.yn=0,bNRI.yn=0,bMNTD.yn=0,bNTI.yn=0,cor.MPD.env.yn=0, cor.NRI.env.yn=0, cor.MNTD.env.yn=0, cor.NTI.env.yn=0, cor.bMPD.env.yn=0, cor.bNRI.env.yn=0, cor.bMNTD.env.yn=0, cor.bNTI.env.yn=0, cor.method="pearson",ab.weight=TRUE,exclude.consp=FALSE,rand.times=1000,code.wd)
 {
   comm=comi[,colSums(comi)>0]
   library(picante)
@@ -7,8 +7,8 @@ egg.p<-function(comi,tree=tree,pd=pd,env=env,nworker=8,memory.G=50,prefix,PD.yn=
   {
     if(is.na(tree)[[1]])
     {
-      message("neither pd nor tree is available. stop.")
-      break
+      message("neither pd nor tree is available. pd set as NA.")
+      pd=NA
     }else{
       message("Now calculating phylogenetic distances. ",date())
       source(file = paste(code.wd,"/pdist.p.r",sep = ""))
@@ -19,12 +19,17 @@ egg.p<-function(comi,tree=tree,pd=pd,env=env,nworker=8,memory.G=50,prefix,PD.yn=
   }
   
   # match species names
-  sp.name=intersect(colnames(comm),rownames(pd))
-  comm=comm[,match(sp.name,colnames(comm))]
-  pd=pd[match(sp.name,rownames(pd)),match(sp.name,rownames(pd))]
-  gc()
-  lost=data.frame(Discarded=c("com",setdiff(colnames(comm),rownames(pd)),"","pd",setdiff(rownames(pd),colnames(comm))))
-  write.csv(lost,file=paste("output/",prefix,".p02.lostSpecies.csv",sep = ""))
+  if(is.null(nrow(pd)))
+  {
+    sp.name=colnames(comm)
+  }else{
+    sp.name=intersect(colnames(comm),rownames(pd))
+    comm=comm[,match(sp.name,colnames(comm))]
+    pd=pd[match(sp.name,rownames(pd)),match(sp.name,rownames(pd))]
+    gc()
+    lost=data.frame(Discarded=c("com",setdiff(colnames(comm),rownames(pd)),"","pd",setdiff(rownames(pd),colnames(comm))))
+    write.csv(lost,file=paste("output/",prefix,".p02.lostSpecies.csv",sep = ""))
+  }
   
   samp.name=intersect(rownames(comm),rownames(env))
   comm=comm[match(samp.name,rownames(comm)),]
@@ -204,7 +209,7 @@ egg.p<-function(comi,tree=tree,pd=pd,env=env,nworker=8,memory.G=50,prefix,PD.yn=
       {
         bMPD=read.table(file = paste("output/",prefix,".p07.betaMPD.csv",sep = ""),header = T,sep = ",",row.names = 1)
       }
-      bmpd.cor=cor.m(dis = bMPD,env = env)
+      bmpd.cor=cor.m(dis = bMPD,env = env,nworker=nworker,method = cor.method)
       write.csv(bmpd.cor,file=paste("output/",prefix,".p07.2.bMPDvsEnv.csv",sep = ""))
     }
   }else{
@@ -225,7 +230,7 @@ egg.p<-function(comi,tree=tree,pd=pd,env=env,nworker=8,memory.G=50,prefix,PD.yn=
       {
         bNRI=read.table(file = paste("output/",prefix,".p08.betaNRI.csv",sep = ""),header = T,sep = ",",row.names = 1)
       }
-      bNRI.cor=cor.m(dis = bNRI,env = env)
+      bNRI.cor=cor.m(dis = bNRI,env = env,nworker=nworker,method = cor.method)
       write.csv(bNRI.cor,file=paste("output/",prefix,".p08.2.bNRIvsEnv.csv",sep = ""))
     }
   }else{
@@ -269,7 +274,7 @@ egg.p<-function(comi,tree=tree,pd=pd,env=env,nworker=8,memory.G=50,prefix,PD.yn=
       {
         bMNTD=read.table(file = paste("output/",prefix,".p09.betaMNTD.csv",sep = ""),header = T,sep = ",",row.names = 1)
       }
-      bMNTD.cor=cor.m(dis = bMNTD,env = env)
+      bMNTD.cor=cor.m(dis = bMNTD,env = env,nworker=nworker,method = cor.method)
       write.csv(bMNTD.cor,file=paste("output/",prefix,".p09.2.bMNTDvsEnv.csv",sep = ""))
     }
   }else{
@@ -290,7 +295,7 @@ egg.p<-function(comi,tree=tree,pd=pd,env=env,nworker=8,memory.G=50,prefix,PD.yn=
       {
         bNTI=read.table(file = paste("output/",prefix,".p10.betaNTI.csv",sep = ""),header = T,sep = ",",row.names = 1)
       }
-      bNTI.cor=cor.m(dis = bNTI,env = env)
+      bNTI.cor=cor.m(dis = bNTI,env = env,nworker=nworker,method = cor.method)
       write.csv(bNTI.cor,file=paste("output/",prefix,".p10.2.bNTIvsEnv.csv",sep = ""))
     }
   }else{

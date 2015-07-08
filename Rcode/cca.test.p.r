@@ -36,6 +36,7 @@ cca.test.p<-function(com.test,env,cases=NA,summ=FALSE,nworker=4,memory.G=30,list
       cases=lapply(1:case.num,function(i,x){x[i,]},x=as.matrix(cases))
     }
   }
+  case.num=length(cases)
   message("Total case numer is ", length(cases), ". ",date())
   cca.t<-function(i,com,env,cases,summ)
   {

@@ -1,9 +1,9 @@
 
-setwd("C:/Users/Daliang/Dropbox/NSF-Macrosystem/GiganteITS_analyze")
+setwd("C:/Users/Daliang/Documents/R/100Well/All-OTU/egg.p.100Well.OTU30k.pore0.2")
 
 # setwd("C:/Users/Daliang/Dropbox/ToolDevelop/github/egg")
 # install.packages("vegan")
-# install.packages("picante")
+#install.packages("picante")
 # install.packages("data.table")
 
 #########################################
@@ -237,7 +237,8 @@ if(phylo.yn!=0)
                   cor.MNTD.env.yn=cor.MNTD.env.yn, cor.NTI.env.yn=cor.NTI.env.yn,
                   cor.bMPD.env.yn=cor.bMPD.env.yn, cor.bNRI.env.yn=cor.bNRI.env.yn,
                   cor.bMNTD.env.yn=cor.bMNTD.env.yn, cor.bNTI.env.yn=cor.bNTI.env.yn,
-                  ab.weight=ab.weight,exclude.consp=exclude.consp,rand.times=rand.times,code.wd=code.wd)
+                  cor.method="pearson",ab.weight=ab.weight,exclude.consp=exclude.consp,
+                  rand.times=rand.times,code.wd=code.wd)
   
 }
 

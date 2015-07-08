@@ -1,4 +1,4 @@
-cor.m<-function(dis,env,method=c("pearson","kendall","spearman"))
+cor.m<-function(dis,env,nworker=4,method=c("pearson","kendall","spearman"))
 {
   # correlation between dis and each env or all by mantel test
   dis=as.matrix(dis)
@@ -13,16 +13,18 @@ cor.m<-function(dis,env,method=c("pearson","kendall","spearman"))
   envdis<-function(i,env){dist(env[,i])}
   env.d=lapply(1:env.num, envdis, env=env)
   env.d[[length(env.d)+1]]=dist(env)
-  mtest<-function(X,Y,meth)
+  mtest<-function(i,X.l,Y,meth,nworker)
   {
-    test=mantel(X,Y,method = meth)
+    X=X.l[[i]]
+    message("now mantel test, i=",i," in ",length(X.l),". ",date())
+    test=mantel(X,Y,method = meth,na.rm = TRUE,parallel = nworker)
     (res=c(test$statistic,test$signif))
   }
   
   res=data.frame(matrix(nrow = env.num+1,ncol = 2*length(method)))
   for(i in 1:length(method))
   {
-    test=lapply(env.d, mtest,Y=dis,meth=method[i])
+    test=lapply(1:length(env.d), mtest,X.l=env.d,Y=dis,meth=method[i],nworker=nworker)
     res[,(2*i-1):(2*i)]=t(matrix(unlist(test),nrow = 2))
   }
   rownames(res)=c(colnames(env),"All")

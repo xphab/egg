@@ -1,23 +1,25 @@
 
 # Step 1# input #
-wd="C:/Users/Daliang/Dropbox/ToolDevelop/github/egg"
+wd="C:/Users/Daliang/Dropbox/forCongWangCCA"
 code.wd="C:/Users/Daliang/Dropbox/ToolDevelop/github/egg/Rcode"
 
-com.file="OTU_resampled.txt"
+com.file="OTU.txt"
 env.file="env.csv"
 top.case.file="case.top.csv"
 prefix="cca.test"
 
-com.simple.yn=TRUE # simplify community matrix?
-cca.test.yn=FALSE # test CCA using simplified commmunity?
+com.simple.yn=FALSE # simplify community matrix?
+cca.test.yn=TRUE # test CCA using simplified commmunity?
+factor.num.up=9
+factor.num.down=7
 cca.topcases.yn=FALSE # you have got top cases and want to do CCA using full community matrix?
 cca.top1.case=FALSE # input the case number(s) if you have decided which case you want to use and want to output data for plot.
 cca.one.yn=FALSE # do you want to do CCA for each env factor with full community matrix?
 
-new.limit=20
-resample.method="sequence" # "taxa" for geochip, "sequence" for sequencing results.
-nworker=1
-resample.times=10
+new.limit=1000
+resample.method="taxa" # "taxa" for geochip, "sequence" for sequencing results.
+nworker=4
+resample.times=20
 memory.Gb=50
 list.limit=5000
 
@@ -41,6 +43,7 @@ if(sum(rownames(comm)!=rownames(env))>0)
 }
 
 # Step 3 # resample community matrix to get a simplified matrix # CCA test using simplified community matrix
+coms.log=FALSE
 if(com.simple.yn)
 {
   
@@ -63,9 +66,21 @@ if(cca.test.yn)
       coms=t(read.table(file = paste("output/",prefix,".com.simple.csv",sep = ""),header = T,sep = ",",row.names = 1))
     }
   }
+  env.num=ncol(env)
+  env.name=colnames(env)
+  samp.num=nrow(comm)
+  f.num=min(env.num,samp.num-1)
+  case.num=2^env.num-1
+  source(file = paste(code.wd,"/intTobit.r",sep = ""))
+  cases=lapply(1:case.num, intTobit,len=env.num)
+  cases=data.frame(t(matrix(unlist(cases),nrow = length(cases[[1]]))))
+  colnames(cases)=env.name
+  casum=rowSums(cases)
+  cases.select=cases[casum<=f.num & casum<=factor.num.up & casum>=factor.num.down,]
+  
   source(file = paste(code.wd,"/cca.test.p.r",sep = ""))
-  cca.test=cca.test.p(com.test = coms,env = env,summ = FALSE,nworker = nworker,memory.G = memory.Gb,list.limit = list.limit,code.wd = code.wd)
-  write.csv(cca.test,file = paste("output/",prefix,".cca.simple.test.csv",sep = ""))
+  cca.test=cca.test.p(com.test = coms,env = env,cases = cases.select, summ = FALSE,nworker = nworker,memory.G = memory.Gb,list.limit = list.limit,code.wd = code.wd)
+  write.csv(cca.test,file = paste("output/",prefix,".cca.simple.test.",factor.num.down,"to",factor.num.up,".csv",sep = ""))
 }
 
 # Step 4 # CCA top cases you picked up #
